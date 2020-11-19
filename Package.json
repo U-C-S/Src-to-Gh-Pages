@@ -1,13 +1,15 @@
 {
   "name" : "src-to-gh-pages",
   "description" : "A NodeJS Application to help me deploy website from src folder to gh-pages branch automatically",
-  "keywords" : ["util", "gh-pages", "src", "github"],
+  "version": "0.0.1",
   "author" : "U-C-S <ucs3721@outlook.com>",
-  "repository" : {"type": "git", "url": "git://github.com/U-C-S/Src-to-Gh-Pages.git"},
-  "main" : "index.js",
-  "version" : "0.0.1",
-  "license" : "MIT",
-  "scripts" : {
-    "start": "node index.js"
+  "repository" : {
+    "type": "git",
+    "url": "git://github.com/U-C-S/Src-to-Gh-Pages.git"
+  },
+  "keywords" : ["util", "gh-pages", "src", "github"],
+  "license": "MIT",
+  "scripts": {
+    "srcgh": "node index.js"
   }
 }
