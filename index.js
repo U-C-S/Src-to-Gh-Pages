@@ -1,6 +1,10 @@
 const fs = require('fs');
 var glob = require('glob');
 
+
+module.exports = () => {
+  console.log('Welcome to the outside!')
+}
 //-----------------------------------
 let currentPath = __dirname;
 let distDir = `${currentPath}\\dist`;
