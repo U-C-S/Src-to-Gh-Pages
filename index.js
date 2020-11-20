@@ -1,25 +1,23 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const glob = require('glob');
 
-let currentPath = __dirname;
-let distDir = `${currentPath}\\dist`;
-let jsonFile;
-
-try {
-  let file = fs.readFileSync('./srcgh.json');
-  jsonFile = JSON.parse(file);
-} catch (err) {
-  console.error("ERROR: srcgh.json file not found in " + __dirname);
-  console.log(err);
-}
-
-if(!jsonFile.include){
-  jsonFile.include = ["src"];
-}
-
-srcOperations();
-
 function srcOperations(){
+  let jsonFile;
+
+  try {
+    let file = fs.readFileSync('./srcgh.json');
+    jsonFile = JSON.parse(file);
+  } catch (err) {
+    console.error("ERROR: srcgh.json file not found in " + __dirname);
+    console.log(err);
+  }
+  
+  if(!jsonFile.include){
+    jsonFile.include = ["src"];
+  }
+
   let srcPattern = jsonFile.include[0];
   let ignorePattern = jsonFile.exclude[0];
 
@@ -28,7 +26,7 @@ function srcOperations(){
   console.log(srcFiles);
 
   fs.mkdirSync(
-    distDir, 
+    `${__dirname}\\dist`, 
     { recursive: true },
     (err) => {if (err) throw err;}
   );  
@@ -40,20 +38,10 @@ function srcOperations(){
       })
     }
   });
-
-
-
 }
 
 function dist(file){
   return file.replace('src','dist');
 }
 
-/*
-if(fs.existsSync(jsonFile.src)){
-  console.log('Path Exists');
-  srcOperations();
-}
-else{
-  throw "src path mentioned srcgh.json is not available";
-} */
+srcOperations();
