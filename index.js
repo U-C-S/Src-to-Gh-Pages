@@ -1,37 +1,53 @@
 const fs = require('fs');
-var glob = require('glob');
+const path = require('path');
+const glob = require('glob');
+//const cli = require('inquirer');
 
-
-module.exports = () => {
-  console.log('Welcome to the outside!')
-}
 //-----------------------------------
 let currentPath = __dirname;
 let distDir = `${currentPath}\\dist`;
-let srcPattern = "{./src/*,./src/*/*}";
+let jsonFile;
 
-fs.mkdir(
-  distDir, 
-  { recursive: true },
-  (err) => {if (err) throw err;}
-);
-
-if(fs.existsSync('./src')){
-  srcOperations();
+try {
+  let file = fs.readFileSync('./srcgh.json');
+  jsonFile = JSON.parse(file);
+} catch (err) {
+  console.error("ERROR: srcgh.json file not found in " + __dirname);
+  console.log(err);
 }
 
-function srcOperations(){
-  let srcFiles;
-  console.log('Path Exists');
+if(!jsonFile.include){
+  jsonFile.include = ["src"];
+}
 
-  glob(srcPattern, {nonull: false}, (err,files)=>{
-    if (err) throw err;
-    console.log(files);
-    srcFiles = files;
+srcOperations();
+
+function srcOperations(){
+  let srcPattern = jsonFile.include[0];
+  let ignorePattern = jsonFile.exclude[0];
+
+  let srcFiles = glob.sync(srcPattern, {nonull: false});
+
+  console.log(srcFiles);
+
+  fs.mkdirSync(
+    distDir, 
+    { recursive: true },
+    (err) => {if (err) throw err;}
+  );  
+
+  srcFiles.forEach(file => {
+    if(file.includes('.')){
+      fs.copyFile(file, dist(file),(err)=>{
+        if(err) throw err;
+      })
+    }
   });
 
-  // fs.copyFile("./src/index.html","./dist/index.html",(err)=>{
-  //   if(err) throw err;
-  //   console.log('copied');
-  // })
+
+
+}
+
+function dist(file){
+  return file.replace('src','dist');
 }

@@ -1,6 +1,6 @@
 {
   "name": "src-to-gh-pages",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A NodeJS Application to help me deploy website from src folder to gh-pages branch automatically",
   "main": "index.js",
   "bin": {
@@ -20,6 +20,7 @@
     "srcgh": "node index.js"
   },
   "dependencies": {
-    "glob": "^7.1.6"
+    "glob": "^7.1.6",
+    "inquirer": "^7.3.3"
   }
 }
