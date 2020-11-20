@@ -1,9 +1,6 @@
 const fs = require('fs');
-const path = require('path');
 const glob = require('glob');
-//const cli = require('inquirer');
 
-//-----------------------------------
 let currentPath = __dirname;
 let distDir = `${currentPath}\\dist`;
 let jsonFile;
@@ -26,7 +23,7 @@ function srcOperations(){
   let srcPattern = jsonFile.include[0];
   let ignorePattern = jsonFile.exclude[0];
 
-  let srcFiles = glob.sync(srcPattern, {nonull: false});
+  let srcFiles = glob.sync(srcPattern, {nonull: false, ignore: ignorePattern});
 
   console.log(srcFiles);
 
@@ -51,3 +48,12 @@ function srcOperations(){
 function dist(file){
   return file.replace('src','dist');
 }
+
+/*
+if(fs.existsSync(jsonFile.src)){
+  console.log('Path Exists');
+  srcOperations();
+}
+else{
+  throw "src path mentioned srcgh.json is not available";
+} */
