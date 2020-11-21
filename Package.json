@@ -1,10 +1,10 @@
 {
   "name": "src-to-gh-pages",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A NodeJS Application to help me deploy website from src folder to gh-pages branch automatically",
   "main": "index.js",
   "bin": {
-    "srcgh": "./index.js"
+    "srcgh": "index.js"
   },
   "author": "U-C-S <ucs3721@outlook.com>",
   "repository": {
@@ -18,8 +18,5 @@
   "homepage": "https://github.com/U-C-S/Src-to-Gh-Pages#readme",
   "scripts": {
     "srcgh": "node index.js"
-  },
-  "dependencies": {
-    "glob": "^7.1.6"
   }
 }

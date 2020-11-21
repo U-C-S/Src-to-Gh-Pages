@@ -1,47 +1,35 @@
-#!/usr/bin/env node
+const dirReader = require('./dir');
 
-const fs = require('fs');
-const glob = require('glob');
+let FileData = new Object();
+let x = retriveAllData('./src');
 
-function srcOperations(){
-  let jsonFile;
+function retriveAllData(entryPoint){
+  let main = dirReader(entryPoint);
+  console.log(main.fileArray);
+  AddtoObject('main',main);
 
-  try {
-    let file = fs.readFileSync('./srcgh.json');
-    jsonFile = JSON.parse(file);
-  } catch (err) {
-    console.error("ERROR: srcgh.json file not found in " + __dirname);
-    console.log(err);
+  if(main.dirArray != []){
+    main.dirArray.forEach(folder => {
+      AddtoObject(folder , dirReader(folder));
+    })
   }
-  
-  if(!jsonFile.include){
-    jsonFile.include = ["src"];
-  }
-
-  let srcPattern = jsonFile.include[0];
-  let ignorePattern = jsonFile.exclude[0];
-
-  let srcFiles = glob.sync(srcPattern, {nonull: false, ignore: ignorePattern});
-
-  console.log(srcFiles);
-
-  fs.mkdirSync(
-    `${__dirname}\\dist`, 
-    { recursive: true },
-    (err) => {if (err) throw err;}
-  );  
-
-  srcFiles.forEach(file => {
-    if(file.includes('.')){
-      fs.copyFile(file, dist(file),(err)=>{
-        if(err) throw err;
-      })
-    }
-  });
 }
 
-function dist(file){
-  return file.replace('src','dist');
+function AddtoObject(name, content){
+  FileData[name] = content;
 }
 
-srcOperations();
+
+
+console.log(x);
+setTimeout(()=>console.log(x), 3000);
+
+/*
+fs.stat(path.join(__dirname,'./src'),(err,stats)=>{
+  console.log(stats.isDirectory());
+})
+
+console.log(path.join(__dirname,'./src','abcd.rs'));
+*/
+
+//node what.js
