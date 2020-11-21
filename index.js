@@ -2,29 +2,27 @@ const fs = require('fs');
 const dirReader = require('./dir');
 const log = require('./log');
 
-
-let FileData = {};
 let x = retriveAllData('./src');
 
 function retriveAllData(entryPoint){
+  let FileData = {};
   let main = dirReader(entryPoint);
-  AddtoObject('main', main);
+  FileData['main'] = main;
 
   if(main.dirArray != []){
     main.dirArray.forEach(folder => {
       let dirFiles = dirReader(folder);
-      if(dirFiles) AddtoObject(folder , dirFiles);
+      if(dirFiles)
+        FileData[folder] = dirFiles;
     })
   }
+
+  return FileData;
 }
 
-function AddtoObject(name, content){
-  FileData[name] = content;
-}
 
-
-fs.appendFileSync('./data.txt', JSON.stringify(FileData));
-console.log('Data printed to data.txt file in this directory');
+fs.appendFileSync('./DirData.json', JSON.stringify(x));
+console.log('Data printed to DirData.json file in this directory');
 
 /*
 fs.stat(path.join(__dirname,'./src'),(err,stats)=>{
