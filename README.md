@@ -11,5 +11,5 @@ This package can read all the files in your specified folder and output them as 
 
 
 #### To Use:
-- <code>npm i -g srcgh</code>
+- <code>npm i -g src-to-gh-pages</code>
 - <code>srcgh [folder]</code>
