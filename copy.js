@@ -1,5 +1,5 @@
 const fs = require("fs");
 
 function copier(data) {
-  let 
+  let what = "wait";
 }
