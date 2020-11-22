@@ -1,6 +1,6 @@
 {
   "name": "src-to-gh-pages",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A NodeJS Application to help me deploy website from src folder to gh-pages branch automatically",
   "main": "index.js",
   "bin": {
@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git://github.com/U-C-S/Src-to-Gh-Pages.git"
   },
+  "keywords": ["src","gh-pages","github","zero-dependency"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/U-C-S/Src-to-Gh-Pages/issues"

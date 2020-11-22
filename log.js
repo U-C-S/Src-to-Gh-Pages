@@ -1,5 +1,3 @@
-function log(x = 'Here'){
+module.exports = (x = 'Here') =>{
   console.log(x);
 }
-
-module.exports = log;

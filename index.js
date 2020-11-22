@@ -1,35 +1,19 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
-const dirReader = require('./dir');
+const process = require('process');
+const DirData = require('./dir');
 const log = require('./log');
 
-let x = retriveAllData('./src');
-
-function retriveAllData(entryPoint){
-  let FileData = {};
-  let main = dirReader(entryPoint);
-  FileData['main'] = main;
-
-  if(main.dirArray != []){
-    main.dirArray.forEach(folder => {
-      let dirFiles = dirReader(folder);
-      if(dirFiles)
-        FileData[folder] = dirFiles;
-    })
-  }
-
-  return FileData;
-}
+const arg = process.argv[2];
+let srcFolder = (!arg) ? 'src' : arg;
+let x = DirData(srcFolder);
 
 
-fs.appendFileSync('./DirData.json', JSON.stringify(x));
-console.log('Data printed to DirData.json file in this directory');
-
-/*
-fs.stat(path.join(__dirname,'./src'),(err,stats)=>{
-  console.log(stats.isDirectory());
-})
-
-console.log(path.join(__dirname,'./src','abcd.rs'));
-*/
-
-//node what.js
+log('This is app is currently in Beta. Not All features included');
+log('-- What this package can do now?');
+log('-- This package can read all the files in your specified folder and output them as a JSON file. ');
+setTimeout(()=>{
+  fs.appendFileSync('DirData.json', JSON.stringify(x));
+  log('Data printed to DirData.json file in this directory');
+},1000);
