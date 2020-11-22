@@ -1,8 +1,8 @@
 //This module is for Developmental Purposes
 
-module.exports = (x = 'Here') =>{
+module.exports = (x = "Here") => {
   console.log(x);
-}
+};
 
 /*
 ####ToDO
