@@ -6,7 +6,7 @@ module.exports = (x = "Here") => {
 
 /*
 ####ToDO
-- Function to copy the files to dist
+- Function to copy the files to dist (x)
 - feature to excute other commands before the execution of this package
 - feature to deploy the dist folder to Gh-pages
 - srcgh.json

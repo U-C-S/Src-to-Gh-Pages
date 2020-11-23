@@ -1,6 +1,6 @@
 {
   "name": "src-to-gh-pages",
-  "version": "0.3.3",
+  "version": "0.4.0-beta1",
   "description": "A NodeJS Application to help me deploy website from src folder to gh-pages branch automatically",
   "main": "index.js",
   "bin": {

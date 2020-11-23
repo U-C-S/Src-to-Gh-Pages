@@ -1,10 +1,10 @@
 const fs = require("fs");
 const path = require("path");
-const log = require("./log");
+const log = require("./log").default;
 
 let Addresses = { fileArray: [], dirArray: [] };
 
-function TheAddressesOf(entryPoint) {
+function ThePathsOf(entryPoint) {
   dirReader(entryPoint);
 
   for (let i = 0; i < Addresses.dirArray.length; i++) {
@@ -29,4 +29,4 @@ function dirReader(src) {
   });
 }
 
-module.exports = TheAddressesOf;
+module.exports = ThePathsOf;
