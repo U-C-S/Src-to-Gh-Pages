@@ -1,44 +1,32 @@
 const fs = require("fs");
 const path = require("path");
-const log = require("./log");
+const log = require("./log").default;
 
-function DirData(entryPoint) {
-  let FileData = {};
-  let main = dirReader(entryPoint);
-  FileData[entryPoint] = main;
+let Addresses = { fileArray: [], dirArray: [] };
 
-  let AllDirs = main.dirArray;
-  for (let i = 0; i < AllDirs.length; i++) {
-    const aDir = AllDirs[i];
-    let dirFiles = dirReader(aDir);
-    FileData[aDir] = dirFiles;
-    AllDirs.push.apply(AllDirs, dirFiles.dirArray);
-    log(AllDirs);
+function ThePathsOf(entryPoint) {
+  dirReader(entryPoint);
+
+  for (let i = 0; i < Addresses.dirArray.length; i++) {
+    dirReader(Addresses.dirArray[i]);
   }
 
-  return FileData;
+  return Addresses;
 }
 
 function dirReader(src) {
   let readDir = fs.readdirSync(src);
-  let FileAdrsStore = new Array();
-  let DirAdrsStore = new Array();
 
   readDir.forEach((address) => {
-    let AbPath = path.join(src, address);
-    let AdrsStats = fs.statSync(AbPath);
-    if (!AdrsStats.isDirectory()) {
-      FileAdrsStore.push(AbPath);
+    let NewRelPath = path.join(src, address);
+    let pathStats = fs.statSync(NewRelPath);
+
+    if (!pathStats.isDirectory()) {
+      Addresses.fileArray.push(NewRelPath);
     } else {
-      DirAdrsStore.push(AbPath);
+      Addresses.dirArray.push(NewRelPath);
     }
   });
-
-  let retVal = {
-    fileArray: FileAdrsStore,
-    dirArray: DirAdrsStore,
-  };
-  return retVal;
 }
 
-module.exports = DirData;
+module.exports = ThePathsOf;
