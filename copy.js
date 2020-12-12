@@ -5,7 +5,8 @@ function copier(data) {
   if (fs.existsSync("dist")) {
     fs.rmdirSync("dist", { recursive: true });
     fs.mkdirSync("dist");
-  } else {
+  } 
+  else {
     fs.mkdirSync("dist");
   }
 

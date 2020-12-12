@@ -6,7 +6,6 @@ let Addresses = { fileArray: [], dirArray: [] };
 
 function ThePathsOf(entryPoint) {
   dirReader(entryPoint);
-
   for (let i = 0; i < Addresses.dirArray.length; i++) {
     dirReader(Addresses.dirArray[i]);
   }
