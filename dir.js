@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const log = require("./log").default;
 
 let Addresses = { fileArray: [], dirArray: [] };
 
