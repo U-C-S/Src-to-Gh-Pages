@@ -1,21 +1,15 @@
 const path = require("path");
-const {
-  readdirSync,
-  statSync,
-  existsSync,
-  rmdirSync,
-  mkdirSync,
-  copyFileSync,
-} = require("fs");
+const fs = require("fs");
 
 //-----DirReader----------------
-let Addresses = { fileArray: [], dirArray: [] };
+let Addresses = { rootDir: "", fileArray: [], dirArray: [] };
+let rootDir;
 function dirReader(src) {
-  let readDir = readdirSync(src);
+  let readDir = fs.readdirSync(src);
 
   readDir.forEach((address) => {
     let NewRelPath = path.join(src, address);
-    let pathStats = statSync(NewRelPath);
+    let pathStats = fs.statSync(NewRelPath);
 
     if (pathStats.isDirectory()) {
       Addresses.dirArray.push(NewRelPath);
@@ -25,8 +19,9 @@ function dirReader(src) {
   });
 }
 
-async function ThePathsOf(entryPoint) {
-  dirReader(entryPoint);
+function ThePathsOf(entryDir, dirBindAddress) {
+  entryDir = rootDir = Addresses.rootDir = path.join(dirBindAddress, entryDir);
+  dirReader(entryDir);
   for (let i = 0; i < Addresses.dirArray.length; i++) {
     dirReader(Addresses.dirArray[i]);
   }
@@ -36,26 +31,25 @@ async function ThePathsOf(entryPoint) {
 
 //----Copy the dir data to other-------------
 function Copier(data, CopyTarget) {
-  if (existsSync(CopyTarget)) {
-    rmdirSync(CopyTarget, { recursive: true });
-    mkdirSync(CopyTarget);
+  if (fs.existsSync(CopyTarget)) {
+    fs.rmdirSync(CopyTarget, { recursive: true });
+    fs.mkdirSync(CopyTarget);
   } else {
-    mkdirSync(CopyTarget);
+    fs.mkdirSync(CopyTarget);
   }
 
   try {
     data.dirArray.forEach((dir) => {
       let newDirPath = path.join(CopyTarget, dir);
-      mkdirSync(newDirPath);
+      fs.mkdirSync(newDirPath);
     });
-  } 
-  catch (error) {
-    throw new Error("Boooo");
+  } catch (error) {
+    console.log(error);
   }
 
   data.fileArray.forEach((file) => {
     let newFilePath = path.join(CopyTarget, file);
-    copyFileSync(file, newFilePath);
+    fs.copyFileSync(file, newFilePath);
   });
 
   log(`Copied Files to ${CopyTarget} Directory`);

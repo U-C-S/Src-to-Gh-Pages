@@ -1,11 +1,17 @@
 //This module is for Developmental Purposes
 const fs = require("fs");
+const { relative } = require("path");
 const { ThePathsOf, Copier } = require("../dir");
 
-let x = ThePathsOf("tests/folderTest");
+let x = ThePathsOf("folderTest", __dirname);
 fs.appendFileSync("DirData.json", JSON.stringify(x));
+// let xx= relative(
+//   "D:\\COde\\Web Dev\\Src-to-Gh-Pages\\tests\\folderTest",
+//   "D:\\COde\\Web Dev\\Src-to-Gh-Pages\\tests\\folderTest\\cat\\kitty.txt"
+// );
+// console.log(xx);
 
-Copier(x, "D:/TESTING/");
+//Copier(x, "D:/TESTING/");
 
 /*
 ####ToDO
