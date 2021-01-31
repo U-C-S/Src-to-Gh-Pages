@@ -1,11 +1,16 @@
-# TheOkayDirReader
+# the-Dir-Reader
 
 ### WORK-IN-PROGRESS
 
-A NodeJS Application to read the contents of a Directory
+A NodeJS Application to read the contents of a Directory and returns the contents of it as Object
 
-NPM Package: https://www.npmjs.com/package/src-to-gh-pages
-
+returns interface: 
+<code>
+{
+  fileArray: string[],
+  dirArray: string[]
+}
+</code>
 #### What this package can do now?
 
 Note: This package is a work-in-progress

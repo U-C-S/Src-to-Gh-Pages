@@ -7,7 +7,6 @@ const {
   mkdirSync,
   copyFileSync,
 } = require("fs");
-const { throws } = require("assert");
 
 //-----DirReader----------------
 let Addresses = { fileArray: [], dirArray: [] };
@@ -26,7 +25,7 @@ function dirReader(src) {
   });
 }
 
-function ThePathsOf(entryPoint) {
+async function ThePathsOf(entryPoint) {
   dirReader(entryPoint);
   for (let i = 0; i < Addresses.dirArray.length; i++) {
     dirReader(Addresses.dirArray[i]);
