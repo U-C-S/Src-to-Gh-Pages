@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const process = require("process");
-const ThePathsOf = require("./dir");
-const log = require("./log");
-const copier = require("./copy");
+const ThePathsOf = require("./dir").default;
+const log = require("./tests/src/log.js").default;
+const copier = require("./copy").default;
 
 const arg = process.argv;
 let srcFolder = arg[2];

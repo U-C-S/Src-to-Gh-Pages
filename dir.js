@@ -1,7 +1,30 @@
-const fs = require("fs");
 const path = require("path");
+const {
+  readdirSync,
+  statSync,
+  existsSync,
+  rmdirSync,
+  mkdirSync,
+  copyFileSync,
+} = require("fs");
+const { throws } = require("assert");
 
+//-----DirReader----------------
 let Addresses = { fileArray: [], dirArray: [] };
+function dirReader(src) {
+  let readDir = readdirSync(src);
+
+  readDir.forEach((address) => {
+    let NewRelPath = path.join(src, address);
+    let pathStats = statSync(NewRelPath);
+
+    if (pathStats.isDirectory()) {
+      Addresses.dirArray.push(NewRelPath);
+    } else {
+      Addresses.fileArray.push(NewRelPath);
+    }
+  });
+}
 
 function ThePathsOf(entryPoint) {
   dirReader(entryPoint);
@@ -12,19 +35,31 @@ function ThePathsOf(entryPoint) {
   return Addresses;
 }
 
-function dirReader(src) {
-  let readDir = fs.readdirSync(src);
+//----Copy the dir data to other-------------
+function Copier(data, CopyTarget) {
+  if (existsSync(CopyTarget)) {
+    rmdirSync(CopyTarget, { recursive: true });
+    mkdirSync(CopyTarget);
+  } else {
+    mkdirSync(CopyTarget);
+  }
 
-  readDir.forEach((address) => {
-    let NewRelPath = path.join(src, address);
-    let pathStats = fs.statSync(NewRelPath);
+  try {
+    data.dirArray.forEach((dir) => {
+      let newDirPath = path.join(CopyTarget, dir);
+      mkdirSync(newDirPath);
+    });
+  } 
+  catch (error) {
+    throw new Error("Boooo");
+  }
 
-    if (!pathStats.isDirectory()) {
-      Addresses.fileArray.push(NewRelPath);
-    } else {
-      Addresses.dirArray.push(NewRelPath);
-    }
+  data.fileArray.forEach((file) => {
+    let newFilePath = path.join(CopyTarget, file);
+    copyFileSync(file, newFilePath);
   });
+
+  log(`Copied Files to ${CopyTarget} Directory`);
 }
 
-module.exports = ThePathsOf;
+module.exports = { ThePathsOf, Copier };

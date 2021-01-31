@@ -1,8 +1,8 @@
 {
-  "name": "src-to-gh-pages",
+  "name": "the-dir-reader",
   "version": "0.5.0",
-  "description": "A NodeJS Application to help me deploy website from src folder to gh-pages branch automatically",
-  "main": "index.js",
+  "description": "A NodeJS Application to read the contents of a Directory",
+  "main": "dir.js",
   "bin": {
     "srcgh": "index.js"
   },
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/U-C-S/Src-to-Gh-Pages#readme",
   "scripts": {
-    "srcgh": "node index.js"
+    "srcgh": "node index.js",
+    "test": "node tests/test1.js"
   }
 }

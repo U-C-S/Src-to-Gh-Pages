@@ -1,8 +1,11 @@
 //This module is for Developmental Purposes
+const fs = require("fs");
+const { ThePathsOf, Copier } = require("../dir");
 
-module.exports = (x = "Here") => {
-  console.log(x);
-};
+let x = ThePathsOf("tests/folderTest");
+fs.appendFileSync("DirData.json", JSON.stringify(x));
+
+Copier(x, "D:/TESTING/");
 
 /*
 ####ToDO
