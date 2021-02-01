@@ -1,6 +1,6 @@
 {
   "name": "the-dir-reader",
-  "version": "0.5.0-alpha",
+  "version": "0.5.0-beta",
   "description": "Reads the contents of a Directory",
   "main": "dir.js",
   "bin": {
@@ -9,7 +9,7 @@
   "author": "U-C-S <ucs3721@outlook.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/U-C-S/Src-to-Gh-Pages.git"
+    "url": "git://github.com/U-C-S/the-dir-reader.git"
   },
   "keywords": [
     "zero-dependency",
@@ -17,11 +17,10 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/U-C-S/Src-to-Gh-Pages/issues"
+    "url": "https://github.com/U-C-S/the-dir-reader/issues"
   },
-  "homepage": "https://github.com/U-C-S/Src-to-Gh-Pages#readme",
+  "homepage": "https://github.com/U-C-S/the-dir-reader#readme",
   "scripts": {
-    "srcgh": "node index.js",
     "test": "node tests/test1.js"
   }
 }
