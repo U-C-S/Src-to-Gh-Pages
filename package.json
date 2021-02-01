@@ -19,5 +19,8 @@
   "homepage": "https://github.com/U-C-S/the-dir-reader#readme",
   "scripts": {
     "test": "node test/test1.js"
+  },
+  "prettier": {
+    "printWidth": 200
   }
 }
