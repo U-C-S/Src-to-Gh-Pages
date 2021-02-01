@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 const process = require("process");
-const ThePathsOf = require("./dir");
-const log = require("./log");
-const copier = require("./copy");
+const ThePathsOf = require("./dir").default;
+const log = require("./tests/src/log.js").default;
+const copier = require("./copy").default;
 
-const arg = process.argv[2];
-let srcFolder = !arg ? "src" : arg;
-let x = ThePathsOf(srcFolder);
+const arg = process.argv;
+let srcFolder = arg[2];
+console.log(srcFolder);
+//let x = ThePathsOf(srcFolder);
 
 log("This is app is currently in Beta. Not All features included");
 log("-- What this package can do now?");
@@ -16,4 +17,4 @@ log(
 );
 
 //fs.appendFileSync("DirData.json", JSON.stringify(x));
-copier(x);
+//copier(x);

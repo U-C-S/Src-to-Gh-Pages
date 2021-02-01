@@ -1,32 +1,64 @@
 const fs = require("fs");
 const path = require("path");
-const log = require("./log").default;
 
-let Addresses = { fileArray: [], dirArray: [] };
+//-----DirReader----------------
+let Addresses = {
+  rootDir: "",
+  dirArray: [],
+  fileArray: [],
+  dirFullPath: [],
+  fileFullPath: [],
+};
+let rootDir;
+function dirReader(src) {
+  let readDir = fs.readdirSync(src);
 
-function ThePathsOf(entryPoint) {
-  dirReader(entryPoint);
+  readDir.forEach((address) => {
+    let fullPath = path.join(src, address);
+    let relPath = path.relative(rootDir, fullPath);
+    let pathStats = fs.statSync(fullPath);
 
-  for (let i = 0; i < Addresses.dirArray.length; i++) {
-    dirReader(Addresses.dirArray[i]);
+    if (pathStats.isDirectory()) {
+      Addresses.dirArray.push(relPath);
+      Addresses.dirFullPath.push(fullPath);
+    } else {
+      Addresses.fileArray.push(relPath);
+      Addresses.fileFullPath.push(fullPath);
+    }
+  });
+}
+
+function ThePathsOf(entryDir, dirBindAddress) {
+  entryDir = rootDir = Addresses.rootDir = path.join(dirBindAddress, entryDir);
+  dirReader(entryDir);
+  for (let i = 0; i < Addresses.dirFullPath.length; i++) {
+    dirReader(Addresses.dirFullPath[i]);
   }
 
   return Addresses;
 }
 
-function dirReader(src) {
-  let readDir = fs.readdirSync(src);
+//----Copy the dir data to other-------------
+function Copier(SrcDirData, CopyTarget) {
+  if (fs.existsSync(CopyTarget)) {
+    fs.rmdirSync(CopyTarget, { recursive: true });
+    fs.mkdirSync(CopyTarget);
+  } else {
+    fs.mkdirSync(CopyTarget);
+  }
 
-  readDir.forEach((address) => {
-    let NewRelPath = path.join(src, address);
-    let pathStats = fs.statSync(NewRelPath);
-
-    if (!pathStats.isDirectory()) {
-      Addresses.fileArray.push(NewRelPath);
-    } else {
-      Addresses.dirArray.push(NewRelPath);
-    }
+  SrcDirData.dirArray.forEach((dir) => {
+    let destFullPath = path.join(CopyTarget, dir);
+    fs.mkdirSync(destFullPath);
   });
+
+  SrcDirData.fileArray.forEach((file) => {
+    let destFullPath = path.join(CopyTarget, file);
+    let srcFilePath = path.join(SrcDirData.rootDir, file);
+    fs.copyFileSync(srcFilePath, destFullPath);
+  });
+
+  console.log(`Copied Files to ${CopyTarget} Directory`);
 }
 
-module.exports = ThePathsOf;
+module.exports = { ThePathsOf, Copier };
