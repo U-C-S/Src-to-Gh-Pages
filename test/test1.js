@@ -3,17 +3,17 @@ const fs = require("fs");
 const { relative } = require("path");
 const { ThePathsOf, Copier } = require("../dir");
 
-//let x = ThePathsOf("folderTest", __dirname);
-//fs.appendFileSync("DirData.json", JSON.stringify(x));
+let x = ThePathsOf("folderTest", __dirname);
+fs.appendFileSync("DirData.json", JSON.stringify(x));
 // let xx= relative(
 //   "D:\\COde\\Web Dev\\Src-to-Gh-Pages\\tests\\folderTest",
 //   "D:\\COde\\Web Dev\\Src-to-Gh-Pages\\tests\\folderTest\\cat\\kitty.txt"
 // );
 // console.log(xx);
 
-//Copier(x, "D:/TESTING/");
-let z = new fs.Dirent(__dirname);
-console.log(z.isDirectory());
+Copier(x, "D:/TESTING/");
+//let z = new fs.Dirent(__dirname);
+//console.log(z.isDirectory());
 
 /*
 ####ToDO

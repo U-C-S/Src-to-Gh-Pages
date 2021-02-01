@@ -1,11 +1,8 @@
 {
   "name": "the-dir-reader",
-  "version": "0.5.0-beta",
+  "version": "0.5.1",
   "description": "Reads the contents of a Directory",
   "main": "dir.js",
-  "bin": {
-    "srcgh": "index.js"
-  },
   "author": "U-C-S <ucs3721@outlook.com>",
   "repository": {
     "type": "git",
@@ -21,6 +18,6 @@
   },
   "homepage": "https://github.com/U-C-S/the-dir-reader#readme",
   "scripts": {
-    "test": "node tests/test1.js"
+    "test": "node test/test1.js"
   }
 }
