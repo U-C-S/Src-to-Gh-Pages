@@ -32,4 +32,4 @@ Copier(x, "D:/TESTING/");
 */
 
 let x = new theDirReader("folderTest", __dirname);
-fs.appendFileSync("DirData.json", JSON.stringify(x.Out()));
+fs.appendFileSync("DirData.json", JSON.stringify(x.Out));

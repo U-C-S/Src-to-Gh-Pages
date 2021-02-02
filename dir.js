@@ -1,44 +1,44 @@
 const fs = require("fs");
 const path = require("path");
 
+let Addresses = {
+  rootDir: "",
+  dirArray: [],
+  fileArray: [],
+  dirFullPath: [],
+  fileFullPath: [],
+};
+
 class theDirReader {
   constructor(entryDir, dirBindAddress) {
     this.entryDir = entryDir;
     this.dirBindAddress = dirBindAddress;
-    this.Addresses = {
-      rootDir: "",
-      dirArray: [],
-      fileArray: [],
-      dirFullPath: [],
-      fileFullPath: [],
-    };
   }
 
-  Out() {
-    let entt = (this.Addresses.rootDir = path.join(this.dirBindAddress, this.entryDir));
-    this.dirReader(entt);
-    for (let i = 0; i < this.Addresses.dirFullPath.length; i++) {
-      this.dirReader(this.Addresses.dirFullPath[i]);
+  get Out() {
+    let entryPath = (Addresses.rootDir = path.join(this.dirBindAddress, this.entryDir));
+    this.dirReader(entryPath);
+    for (let i = 0; i < Addresses.dirFullPath.length; i++) {
+      this.dirReader(Addresses.dirFullPath[i]);
     }
 
-    return this.Addresses;
+    return Addresses;
   }
 
   dirReader(src) {
     let readDir = fs.readdirSync(src);
-    let { rootDir } = this.Addresses;
 
     readDir.forEach((address) => {
       let fullPath = path.join(src, address);
-      let relPath = path.relative(rootDir, fullPath);
+      let relPath = path.relative(Addresses.rootDir, fullPath);
       let pathStats = fs.statSync(fullPath);
 
       if (pathStats.isDirectory()) {
-        this.Addresses.dirArray.push(relPath);
-        this.Addresses.dirFullPath.push(fullPath);
+        Addresses.dirArray.push(relPath);
+        Addresses.dirFullPath.push(fullPath);
       } else {
-        this.Addresses.fileArray.push(relPath);
-        this.Addresses.fileFullPath.push(fullPath);
+        Addresses.fileArray.push(relPath);
+        Addresses.fileFullPath.push(fullPath);
       }
     });
   }
