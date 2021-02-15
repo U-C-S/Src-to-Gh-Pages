@@ -32,4 +32,5 @@ Copier(x, "D:/TESTING/");
 */
 
 let x = new theDirReader("folderTest", __dirname);
+x.Copier("D:/TESTING/");
 fs.appendFileSync("DirData.json", JSON.stringify(x.Out));
