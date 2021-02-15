@@ -1,6 +1,6 @@
 {
   "name": "the-dir-reader",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Reads the contents of a Directory",
   "main": "dir.js",
   "author": "U-C-S <ucs3721@outlook.com>",

@@ -10,6 +10,11 @@ let Addresses = {
 };
 
 class theDirReader {
+  /**
+   * Create a new instance of the dir-reader. Call 'out' property for output.
+   * @param {string} entryDir - specify the directory you want to read the files from...
+   * @param {string} dirBindAddress - keep it as __dirname, required for binding.
+   */
   constructor(entryDir, dirBindAddress) {
     this.entryDir = entryDir;
     this.dirBindAddress = dirBindAddress;
