@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
-//-----DirReader----------------
 let Addresses = {
   rootDir: "",
   dirArray: [],
@@ -9,56 +8,79 @@ let Addresses = {
   dirFullPath: [],
   fileFullPath: [],
 };
-let rootDir;
-function dirReader(src) {
-  let readDir = fs.readdirSync(src);
 
-  readDir.forEach((address) => {
-    let fullPath = path.join(src, address);
-    let relPath = path.relative(rootDir, fullPath);
-    let pathStats = fs.statSync(fullPath);
+class theDirReader {
+  /**
+   * Create a new instance of the dir-reader. Call 'out' property for output.
+   * @param {string} entryDir - specify the directory you want to read the files from...
+   * @param {string} dirBindAddress - keep it as __dirname, required for binding.
+   */
+  constructor(entryDir, dirBindAddress) {
+    this.entryDir = entryDir;
+    this.dirBindAddress = dirBindAddress;
+  }
 
-    if (pathStats.isDirectory()) {
-      Addresses.dirArray.push(relPath);
-      Addresses.dirFullPath.push(fullPath);
-    } else {
-      Addresses.fileArray.push(relPath);
-      Addresses.fileFullPath.push(fullPath);
+  /**
+   * get the output as a object that contains all the available paths in a dir
+   */
+  get Out() {
+    let entryPath = (Addresses.rootDir = path.join(this.dirBindAddress, this.entryDir));
+    this.dirReader(entryPath);
+    for (let i = 0; i < Addresses.dirFullPath.length; i++) {
+      this.dirReader(Addresses.dirFullPath[i]);
     }
-  });
-}
 
-function ThePathsOf(entryDir, dirBindAddress) {
-  entryDir = rootDir = Addresses.rootDir = path.join(dirBindAddress, entryDir);
-  dirReader(entryDir);
-  for (let i = 0; i < Addresses.dirFullPath.length; i++) {
-    dirReader(Addresses.dirFullPath[i]);
+    return Addresses;
   }
 
-  return Addresses;
-}
+  /**
+   * not for Use, outputs a 1 level of paths available in the specified dir
+   * @param {string} src - source path
+   */
+  dirReader(src) {
+    let readDir = fs.readdirSync(src);
 
-//----Copy the dir data to other-------------
-function Copier(SrcDirData, CopyTarget) {
-  if (fs.existsSync(CopyTarget)) {
-    fs.rmdirSync(CopyTarget, { recursive: true });
-    fs.mkdirSync(CopyTarget);
-  } else {
-    fs.mkdirSync(CopyTarget);
+    readDir.forEach((address) => {
+      let fullPath = path.join(src, address);
+      let relPath = path.relative(Addresses.rootDir, fullPath);
+      let pathStats = fs.statSync(fullPath);
+
+      if (pathStats.isDirectory()) {
+        Addresses.dirArray.push(relPath);
+        Addresses.dirFullPath.push(fullPath);
+      } else {
+        Addresses.fileArray.push(relPath);
+        Addresses.fileFullPath.push(fullPath);
+      }
+    });
   }
 
-  SrcDirData.dirArray.forEach((dir) => {
-    let destFullPath = path.join(CopyTarget, dir);
-    fs.mkdirSync(destFullPath);
-  });
+  /**
+   * Used for Copying the files
+   * @param {string} CopyTarget - specify the target where you want to copy the files
+   */
+  Copier(CopyTarget) {
+    let SrcDirData = this.Out;
+    if (fs.existsSync(CopyTarget)) {
+      fs.rmdirSync(CopyTarget, { recursive: true });
+      fs.mkdirSync(CopyTarget);
+    } else {
+      fs.mkdirSync(CopyTarget);
+    }
 
-  SrcDirData.fileArray.forEach((file) => {
-    let destFullPath = path.join(CopyTarget, file);
-    let srcFilePath = path.join(SrcDirData.rootDir, file);
-    fs.copyFileSync(srcFilePath, destFullPath);
-  });
+    SrcDirData.dirArray.forEach((dir) => {
+      let destFullPath = path.join(CopyTarget, dir);
+      fs.mkdirSync(destFullPath);
+    });
 
-  console.log(`Copied Files to ${CopyTarget} Directory`);
+    SrcDirData.fileArray.forEach((file) => {
+      let destFullPath = path.join(CopyTarget, file);
+      let srcFilePath = path.join(SrcDirData.rootDir, file);
+      fs.copyFileSync(srcFilePath, destFullPath);
+    });
+
+    console.log(`Copied Files to ${CopyTarget} Directory`);
+  }
 }
 
-module.exports = { ThePathsOf, Copier };
+module.exports = theDirReader;

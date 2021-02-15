@@ -1,6 +1,9 @@
 //This module is for Developmental Purposes
 const fs = require("fs");
 const { relative } = require("path");
+const theDirReader = require("../dir");
+//const { theDirReader } = require("../dir");
+/*
 const { ThePathsOf, Copier } = require("../dir");
 
 let x = ThePathsOf("folderTest", __dirname);
@@ -14,6 +17,7 @@ fs.appendFileSync("DirData.json", JSON.stringify(x));
 Copier(x, "D:/TESTING/");
 //let z = new fs.Dirent(__dirname);
 //console.log(z.isDirectory());
+*/
 
 /*
 ####ToDO
@@ -26,3 +30,7 @@ Copier(x, "D:/TESTING/");
 - maybe add all the create a union of all similar items, like all files list in a single array and same for dirs
 - Use better naming
 */
+
+let x = new theDirReader("folderTest", __dirname);
+x.Copier("D:/TESTING/");
+fs.appendFileSync("DirData.json", JSON.stringify(x.Out));
