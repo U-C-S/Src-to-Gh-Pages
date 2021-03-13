@@ -11,13 +11,8 @@ returns interface:
   dirArray: string[]
 }
 </code>
-#### What this package can do now?
 
 Note: This package is a work-in-progress
-
-This package can read all the files in your specified folder and Output a JSON file.
-
-
 
 <!-- #### To Use:
 
